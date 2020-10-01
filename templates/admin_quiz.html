@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Admin Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Fontawsome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+    * {
+        /*font-family: 'Manrope', sans-serif;*/
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .table {
+        border-radius: 0 0 25px 25px;
+    }
+
+    .table-title {
+        border-radius: 25px 25px 0 0 !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+    }
+
+    @media only screen and (max-width: 662px) {
+        table {
+            display: block !important;
+            width: 100% !important;
+            overflow-x: auto !important;
+        }
+    }
+</style>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark  py-3" style="background-color: rgba(0,0,0,0.8) !important;">
+    <div class="container">
+        <a class="navbar-brand" href="#"><span style="color:rgb(57, 224, 155)">learn</span>vault</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('table') }}">Admin ChatBot</a>
+                </li>
+                <li class="nav-item active font-weight-bold">
+                    <a class="nav-link" href="{{ url_for('admin_quiz') }}">Admin Quiz</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} py-3 my-3 alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="pt-3">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+
+<div class="container">
+    <div class="row" style="margin-top:1rem">
+        <div class="col-md-8">
+            <h1 class="my-2"><span class="text-success">Admin</span> : Manage Quiz</h1>
+        </div>
+        <div class="col-md-4" style="padding-top:1rem;padding-left: 4.2rem;">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning float-right d-inline mr-3" data-toggle="modal" data-target="#exampleModal">
+                Add Quiz
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel_add"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel_add"><span
+                                    class="text-info">Configuration: </span>Add Quizes</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ url_for('add_quiz') }}" method="POST">
+                            <div class="modal-body">
+                                <div class="alert alert-info" role="alert">
+                                    You can manually add quiz using the template below.
+                                </div>
+                                <label class="font-weight-bold">Question</label>
+                                <input class="form-control" type="text" placeholder="" name="question" required>
+
+                                <label class="font-weight-bold mt-2">Answer</label>
+                                <input class="form-control" type="text" placeholder="" name="answer" required>
+
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <label class="font-weight-bold mt-2">Option 1</label>
+                                        <input class="form-control" type="text" placeholder=""
+                                               name="option_1"
+                                               required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="font-weight-bold mt-2">Option 2</label>
+                                        <input class="form-control" type="text" placeholder=""
+                                               name="option_2"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="font-weight-bold mt-2">Option 3</label>
+                                        <input class="form-control" type="text" placeholder=""
+                                               name="option_3"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+             <a href="/reset_score" type="button" class="btn btn-dark float-right d-inline mr-2"  onclick="return confirm('Are you sure to reset?')">
+                Reset Score
+            </a>
+
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div class="container">
+    <div class="row my-4">
+
+        <div class="col-md-6">
+            <div class="box shadow-sm p-3" style="border-radius: 25px;height:8rem;">
+                <p><strong class="text-dark">Important Note : </strong><br>Ensure that you upload csv files only and
+                    correct columns order
+                    <br> in order for the program to work correctly</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box shadow-sm p-3" style="border-radius: 25px;height: 8rem;">
+
+                <strong class="text-dark">
+                    Action :
+                </strong>
+                <br>
+                <form action="/upload_quiz" method="POST" enctype="multipart/form-data">
+                    <div class="input-group mt-1">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                   name="file-csv">
+                            <label class="custom-file-label" for="inputGroupFile04">Choose
+                                file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-info" type="submit">Upload Quiz</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container mb-5 mt-3">
+    <h4 class="text-center p-2 m-0 table-title" style="background-color:rgba(0,0,0,.05);"><span
+            class="text-dark">Uploaded</span> Quizes</h4>
+    <table class="table table-hover shadow-sm">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Question</th>
+            <th scope="col">Answer</th>
+            <th scope="col">Option</th>
+            <!--            <th scope="col">value</th>-->
+            <th scope="col">
+                <div class="d-flex flex-row bd-highlight">
+                    <div class="bd-highlight">Display</div>
+                    <div class="bd-highlight text-danger pl-1">
+                        <span class="badge badge-primary">{{ total_selected }}</span></div>
+                </div>
+                <!--                Display <span class="text-primary d-inline">({{ total_selected }})</span>-->
+            </th>
+            <th scope="col">Edit</th>
+            <!--            <th scope="col">Remove</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in quiz_data.items %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td> {{ row.question }}</td>
+            <td>{{ row.answer }}</td>
+            <td>{{ row.options}}</td>
+            <!--            {% if row.isSelected == 1%}-->
+            <!--            <td class="text-success font-weight-bold">{{ row.isSelected}}</td>-->
+            <!--            {% elif row.isSelected == 0 %}-->
+            <!--            <td class="text-danger font-weight-bold"> {{ row.isSelected}}</td>-->
+            <!--            {% endif %}-->
+            <td>
+                <a href="/display_quiz_yes/{{ row.id }}"
+                   {% if row.isSelected== 1 %}
+                   class="text-success font-weight-bold"
+                   {% endif %}
+
+                   class="text-dark">Yes</a>
+
+                <a href="/display_quiz_no/{{ row.id }}"
+                   {% if row.isSelected== 0 %}
+                   class="text-danger font-weight-bold"
+                   {% endif %}
+                   class=" text-dark">No</a>
+            </td>
+            <td>
+
+                <!-- Button trigger modal -->
+                <button type="button" href="/update_quiz/{{ row.id }}" class="btn btn-outline-info px-3"
+                        data-toggle="modal"
+                        data-target="#exampleModal{{ row.id }}">
+                    Edit
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{ row.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-info " id="exampleModalLabel"><strong>ROW ID : {{
+                                    row.id
+                                    }}</strong>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{url_for('update_quiz')}}" method="POST">
+                                <div class="modal-body">
+                                    <div class="form-group">
+
+                                        <label for="exampleFormControlTextarea1"
+                                               class="font-weight-bold">Question</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                  name="question"
+                                                  type="text">{{ row.question }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Answer</label>
+                                        <input class="form-control" type="text" value="{{ row.answer }}" name="answer">
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <label class="font-weight-bold mt-2">Option 1</label>
+                                            <input class="form-control" type="text" value="{{ ast.literal_eval(row.options)[0]}}"
+                                                   name="option_1"
+                                                   required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="font-weight-bold mt-2">Option 2</label>
+                                            <input class="form-control" type="text" value="{{ ast.literal_eval(row.options)[1]}}"
+                                                   name="option_2"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="font-weight-bold mt-2">Option 3</label>
+                                            <input class="form-control" value="{{ ast.literal_eval(row.options)[2]}}"
+                                                   name="option_3"
+                                                   required>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- hidden -->
+                                    <input hidden type="text" class="form-control mb-2" value="{{ row.id }}"
+                                           name="rowid">
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <a href="/delete_model_quiz/{{ row.id }}"
+                                       class="btn btn-outline-danger px-3 mr-auto"
+                                       onclick="return confirm('Are you sure to delete?')">
+                                        <i class="far fa-trash-alt pr-1"></i> Remove</a>
+
+                                    <button class="btn btn-success" type="submit"><i class="far fa-save pr-1"></i>
+                                        Save
+                                        Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+            <!--            <td>-->
+            <!--                <a href="/delete_model_quiz/{{ row.id }}" class="btn btn-outline-danger px-3"-->
+            <!--                   onclick="return confirm('Are you sure to delete?')">Remove</a>-->
+            <!--            </td>-->
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="box-paginate text-right">
+        {% for page_num in quiz_data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if quiz_data.page == page_num %}
+        <a class="btn btn-info" href="{{ url_for('admin_quiz', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info" href="{{ url_for('admin_quiz', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container mb-5 mt-3">
+    <h4 class="text-center p-2 m-0 table-title" style="background-color:rgba(0,0,0,.05);"><span
+            class="text-dark">Files</span> History</h4>
+    <table class="table table-hover shadow-sm">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Upload Date</th>
+            <th scope="col">File Name</th>
+            <th scope="col">Download</th>
+            <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in file_data.items %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.date }}</td>
+            <td> {{ row.fileName}}</td>
+            <td>
+                <a href="/download_quiz/{{ row.id }}" class="btn btn-outline-dark">Download</a>
+            </td>
+            <td>
+                <a href="/delete_model_quiz_files/{{ row.id }}" class="btn btn-outline-danger px-3"
+                   onclick="return confirm('Are you sure to delete?')">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="box-paginate text-right">
+        {% for page_num in file_data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if file_data.page == page_num %}
+        <a class="btn btn-info" href="{{ url_for('admin_quiz', page_file=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info" href="{{ url_for('admin_quiz', page_file=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

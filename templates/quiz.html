@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Take Quiz</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+    * {
+        /*font-family: 'Manrope', sans-serif;*/
+        font-family: 'Roboto', sans-serif;
+
+    }
+</style>
+<body>
+
+<!--<div class="container">-->
+<!--    <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>-->
+<!--</div>-->
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} py-3 my-3 alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="pt-3">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<div class="container">
+    <div class="row" style="margin-top:1rem">
+        <div class="col-md-12">
+            <hr>
+            <p class=""><strong class="text-primary">Important Note : </strong> <br>You do not need to provide your
+                username if
+                you
+                wish to take the quiz anonymously.</p>
+
+            <form method="POST" action="/quiz">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username"
+                           value="anonymous" name="username">
+                </div>
+
+                {% for key, value in dictionary_data.items() %}
+                <p>
+                    <strong>{{ loop.index }}. {{ key }}</strong>
+                    <!-- Options  -->
+                    {% for options in value %}
+                <div class="ml-4">
+                    <input type="radio" id="{{ options }}" name="{{ key }}" value="{{ options }}"
+                           class="form-check-input" required>
+                    <label>{{ options }}</label><br>
+                </div>
+                {% endfor %}
+
+                {% endfor %}
+
+                <input type="submit" value="submit" class="btn btn-success btn-block my-3">
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>

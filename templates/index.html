@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Fontawsome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>ChatBot</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark py-3" style="background-color:rgba(0,0,0,0.8) !important;">
+    <div class="container">
+        <a class="navbar-brand" href="#"><span style="color:rgb(57, 224, 155)">learn</span>vault</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active font-weight-bold">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('table') }}">Admin ChatBot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin_quiz') }}">Admin Quiz</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} py-3 my-3 alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="pt-3">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<div class="container">
+    <h1 class="my-4" style="overflow-y:hidden">Home</h1>
+    <!--        <a class="btn btn-dark" href="/speech_to_text"><i class="fas fa-microphone"></i></a>-->
+
+    <hr>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="container p-3">
+                <div class="card mr-auto" style="width: 25rem;">
+                    <div class="card-header text-white" style="background-color: #6C63FF">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="../static/img/robot%20(1).png" class="img-responsive mr-1" width="40"/> <span
+                                    class="font-weight-bold">LMS ChatBot</span> <br>
+                                <p style="font-size: 10px;  margin-top: -0.5rem;padding-left: 0.5rem;padding-right: 0.5rem;margin-left: 3rem;margin-bottom: 0;width: 4rem;border-radius: 25px;background-color: rgba(0,0,0,0.4);"
+                                   class="font-weight-bold">
+                                    <span style="font-size:1rem;" class="text-success">●</span> Online
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-outline-light float-right mt-3" id="voice_button"
+                                   style="border-radius: 50px;margin-top:11px" href="/speech_to_text"><i
+                                        class="fas fa-microphone"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body overflow-auto" style="height:23rem !important;">
+                        <div id="chatbox">
+                            <img src="../static/img/robot%20(1).png" class="img-responsive mr-1 mt-4" width="40"/>
+                            <div class="highlight" style="border-radius: 25px">
+                                <p class="botText" style="margin:0.5rem;"><span>Welcome! I can help you with your questions on International Business module (BM0522)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-typing" style="height:5.2rem;">
+                        <div id="userInput">
+                            <input id="textInput" type="text" name="msg" placeholder="Type your message"
+                                   class="form-control d-inline "
+                                   style="width:23rem;border-radius:25px;height:3rem;margin-left:0.9rem;border:1px solid #6C63FF">
+
+                            <input id="buttonInput" type="submit" value="➤" class="btn text-white d-inline"
+                                   style="background-color: #6C63FF;border-radius:50px;margin-left:-50px"
+                                   onclick="myFunction()">
+                        </div>
+                        <div id="myDIV" style="display: none">
+                            <p class="pl-4"
+                               style="font-size: 0.8rem;font-style: italic;margin-bottom: 0 !important;margin-top: 0 !important;">
+                                LMS Bot is typing <span><img src="../static/img/typing.gif" width="45"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card my-3">
+                <div class="card-header text-center text-uppercase">
+                    <strong data-toggle="tooltip" data-placement="top" title="
+To seat for quiz, simply type 'quiz' in the chatbot !">Leaderboard</strong>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr style="color: #6C63FF">
+                            <th scope="col" class="text-center">Rank</th>
+                            <th scope="col" class="text-center">Name</th>
+                            <th scope="col" class="text-center">Score</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in all_data %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                            <th scope="row" class="text-center" style="background-color: #FFD700">{{ loop.index }}
+                            </th>
+                            <td class="text-center" style="background-color: #FFD700">{{ row.username}} <img
+                                    src="../static/img/badge_first.png"
+                                    width="30"/>
+                            </td>
+
+                            <td class="text-dark text-center" style="font-size: 1.5rem;background-color: #FFD700"> {{
+                                row.score}} / {{ total_questions }}
+                            </td>
+
+                            {% elif loop.index == 2 %}
+                            <th scope="row" class="text-center" style="">{{ loop.index }}
+                            </th>
+                            <td class="text-center" style="">{{ row.username}} <img src="../static/img/medal_second.png"
+                                                                                    width="30"/>
+                            </td>
+                            <td class="text-dark text-center" style="font-size: 1.5rem;"> {{ row.score}} / {{ total_questions }}</td>
+
+                            {% elif loop.index == 3 %}
+                            <th scope="row" class="text-center" style="">{{ loop.index }}
+                            </th>
+                            <td class="text-center" style="">{{ row.username}} <img src="../static/img/third.png"
+                                                                                    width="30"/>
+                            </td>
+                            <td class="text-dark text-center " style="font-size: 1.5rem;"> {{ row.score}} / {{ total_questions }}</td>
+                            {% else %}
+                            <th scope="row" class="text-center">{{ loop.index }}</th>
+
+                            <td class="text-center">{{ row.username}}</td>
+                            <td class="text-dark text-center " style="font-size: 1.5rem"> {{ row.score}} / {{ total_questions }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="alert alert-info" role="alert">
+                <strong>Notice:</strong><br>
+                <p>Show off to your peers by taking the quiz! Simply type "quiz" in the chatbot.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+    function myFunction() {
+        document.getElementById("myDIV").style.display = "block";
+
+        setTimeout(function () {
+            // $('#myDIV').remove();
+            document.getElementById("myDIV").style.display = "none";
+        }, 2000);
+    }
+
+</script>
+
+
+<script>
+    function getBotResponse() {
+        var rawText = $("#textInput").val();
+        var userHtml = '<p class="userText" style="padding:8px 2px 8px 2px"><span>' + rawText + '</span></p>';
+        $("#textInput").val("");
+        $("#chatbox").append(userHtml);
+        document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+        $.get("/get", {msg: rawText}).done(function (data) {
+            var botHtml = '<img src="../static/img/robot%20(1).png" class="img-responsive mr-1" width="40"/>' + '<p class="botText" style="border-radius: 25px;padding:8px 8px 8px 8px;"><span>' + data + '</span></p>';
+            $("#chatbox").append(botHtml);
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+        });
+    }
+
+    $("#textInput").keypress(function (e) {
+        if (e.which == 13) {
+            getBotResponse();
+        }
+    });
+    $("#buttonInput").click(function () {
+        getBotResponse();
+    })
+</script>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

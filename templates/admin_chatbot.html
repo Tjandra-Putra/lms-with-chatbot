@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Fontawsome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <title>Database</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+    * {
+        /*font-family: 'Manrope', sans-serif;*/
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .table {
+        border-radius: 0 0 25px 25px;
+    }
+
+    .table-title {
+        border-radius: 25px 25px 0 0 !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+    }
+
+    @media only screen and (max-width: 662px) {
+        table {
+            display: block !important;
+            width: 100% !important;
+            overflow-x: auto !important;
+        }
+    }
+
+</style>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark  py-3" style="background-color: rgba(0,0,0,0.8) !important;">
+    <div class="container">
+        <a class="navbar-brand" href="#"><span style="color:rgb(57, 224, 155)">learn</span>vault</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item active font-weight-bold">
+                    <a class="nav-link" href="{{ url_for('table') }}">Admin ChatBot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin_quiz') }}">Admin Quiz</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} py-3 my-3 alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="pt-3">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<div class="container">
+    <div class="row" style="margin-top:1rem">
+        <div class="col-md-10">
+            <h1 class="my-2"><span class="text-success">Admin</span> : Data analytics</h1>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+    <hr>
+</div>
+
+
+<div class="container">
+    <div class="row my-4">
+
+        <div class="col-md-6">
+            <div class="box shadow-sm p-3" style="border-radius: 25px;height:8rem;">
+                <p><strong class="text-dark">Important Note : </strong><br>After selecting the rows that you desire to
+                    train,
+                    <br> ensure that you click retrain model for the program to work</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box shadow-sm p-3" style="border-radius: 25px;height: 8rem;">
+
+                <strong class="text-dark">
+                    Action :
+                </strong>
+                <br>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary d-inline mt-2" data-toggle="modal"
+                        data-target="#exampleModalCenterzz">
+                    Add Data
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenterzz" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitlezz" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitlezz"><span
+                                        class="text-info">Configuration </span> : Add
+                                    to training
+                                    data </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Add unknown user responses to training data</p>
+                                <form action="/append_data/" method="POST">
+                                    <button href="/append_data" class="btn btn-primary d-inline btn-block"
+                                            onclick="return confirm('Are you sure to append row?')"
+                                            id="append-existing-row">Append Existing Rows
+                                    </button>
+                                </form>
+
+                                <div class="my-4 text-center" style="color: rgba(0,0,0,.1);">
+                                    <small>────────────────────────
+                                        <span class="text-muted">Or</span>
+                                        ──────────────────────── </small></div>
+
+                                <p>Add your own data(.csv) to training data </p>
+                                <form action="/upload-csv" method="POST" enctype="multipart/form-data">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04"
+                                                   name="file-csv">
+                                            <label class="custom-file-label" for="inputGroupFile04">Choose
+                                                file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-info" type="submit">Upload CSV</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-warning d-inline mt-2 ml-2" data-toggle="modal"
+                        data-target="#exampleModal4444">
+                    Retrain Bot
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal4444" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel4444" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel2">Are you absolutely sure?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-warning" role="alert">
+                                    Unexpected bad things will happen if you don’t read this!
+                                </div>
+                                <p>This action cannot be undone. This will permanently overwrite the existing
+                                    training data
+                                    and files (.json, model).</p>
+                                <p>When this action is performed, the chatbot training data will be updated and
+                                    be
+                                    able to
+                                    perform more accurately.</p>
+                                <p>Please type <strong>TRAIN/model</strong> to confirm</p>
+                                <form method="POST" action="/retrain/">
+                                    <input class="form-control" type="text" placeholder="TRAIN/model" name="retrain">
+                                    <button class="btn btn-light text-danger btn-block mt-2" id="confirm" name="confirm"
+                                            href="/retrain">I understand the consequences, retrain
+                                        model.
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mb-5">
+    <h4 class="text-center p-2 m-0 table-title" style="background-color:rgba(0,0,0,.05);"><span
+            class="text-dark">Unknown</span>
+        Response </h4>
+    <table class="table table-hover shadow-sm table-curved">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Unknown User Response</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Admin Responses</th>
+            <th scope="col">Edit</th>
+            <!--            <th scope="col">Remove</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in all_data.items %}
+        <tr>
+            <th scope="row">{{ row.id }}</th>
+            <td>{{ row.message_unknown }}</td>
+            <td>{{ row.tag }}</td>
+            <td>{{ row.admin_response }}</td>
+            <!--            <td>{{ row.isArchived }}</td>-->
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" href="/update/{{ row.id }}" class="btn btn-outline-info px-3"
+                        data-toggle="modal"
+                        data-target="#exampleModal{{ row.id }}">
+                    Edit
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{ row.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-info" id="exampleModalLabel"><strong>ROW ID : {{
+                                    row.id
+                                    }}</strong>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{url_for('update')}}" method="POST">
+                                <div class="modal-body">
+                                    <div class="form-group">
+
+                                        <label for="exampleFormControlTextarea1" class="font-weight-bold">Unknown
+                                            User
+                                            Response</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                  name="unknown_user_responses"
+                                                  type="text">{{ row.message_unknown }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><span class="font-weight-bold">Tag</span> (Choose existing or add new
+                                            tag)</label>
+                                        <input list="browsers" name="tag" id="browser" class="form-control" required
+                                               autocomplete="off" value="{{ row.tag}}">
+                                        <datalist id="browsers">
+                                            {% for tags in tag_list %}
+                                            <option value="{{ tags }}" class="">{{ tags }}</option>
+                                            {% endfor %}
+                                        </datalist>
+
+                                    </div>
+
+                                    <!-- hidden -->
+                                    <input hidden type="text" class="form-control mb-2" value="{{ row.id }}" id="rowid"
+                                           name="rowid">
+
+                                    <label class="font-weight-bold">Admin Response</label>
+                                    <input type="text" class="form-control ajax_lowercase"
+                                           value="{{ row.admin_response}}"
+                                           name="admin_response" id="input_admin_response">
+                                </div>
+                                <div class="modal-footer">
+                                    <!--                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close-->
+                                    <!--                                    </button>-->
+                                    <a href="/delete_model_messages/{{ row.id }}"
+                                       class="btn btn-outline-danger px-3 mr-auto"
+                                       onclick="return confirm('Are you sure to delete?')"> <i
+                                            class="far fa-trash-alt pr-1"></i> Remove</a>
+
+                                    <a href="/checker_model_messages/{{ row.id }}"
+                                       class="btn btn-outline-dark px-3 mr-auto" data-toggle="tooltip"
+                                       data-placement="top"
+                                       title="Grammar and Spelling corrections will be made to 'Unknown User Response' field">
+                                        <i class="far fa-check-circle pr-1"></i> Auto-correct</a>
+
+                                    <button class="btn btn-success" type="submit"><i class="far fa-save pr-1"></i>
+                                        Save
+                                        Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="box-paginate text-right">
+        {% for page_num in all_data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if all_data.page == page_num %}
+        <a class="btn btn-info" href="{{ url_for('table', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info" href="{{ url_for('table', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+
+<div class="container mb-5 mt-3">
+    <h4 class="text-center p-2 m-0 table-title" style="background-color:rgba(0,0,0,.05);"><span
+            class="text-dark">Archived</span>
+        Response </h4>
+    <table class="table table-hover shadow-sm">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Unknown User Response</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Admin Responses</th>
+            <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in archived_data.items %}
+        <tr>
+            <th scope="row">{{ row.id }}</th>
+            <td>{{ row.message_unknown }}</td>
+            <td>{{ row.tag }}</td>
+            <td>{{ row.admin_response }}</td>
+            <td>
+                <a href="/delete_model_messages/{{ row.id }}" class="btn btn-outline-danger px-3"
+                   onclick="return confirm('Are you sure to delete?')">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="box-paginate text-right">
+        {% for page_num in archived_data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if archived_data.page == page_num %}
+        <a class="btn btn-info" href="{{ url_for('table', page_archived=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info" href="{{ url_for('table', page_archived=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="container mb-5 mt-3">
+    <h4 class="text-center p-2 m-0 table-title" style="background-color:rgba(0,0,0,.05);"><span
+            class="text-dark">Files</span> History</h4>
+    <table class="table table-hover shadow-sm">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Upload Date</th>
+            <th scope="col">File Name</th>
+            <th scope="col">Download</th>
+            <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in file_data.items %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.date }}</td>
+            <td>{{ row.fileName }}</td>
+            <td>
+                <a href="/download/{{ row.id }}" class="btn btn-outline-dark">Download</a>
+            </td>
+            <td>
+                <a href="/delete_model_files/{{ row.id }}" class="btn btn-outline-danger px-3"
+                   onclick="return confirm('Are you sure to delete?')">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="box-paginate text-right">
+        {% for page_num in file_data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if file_data.page == page_num %}
+        <a class="btn btn-info" href="{{ url_for('table', page_file=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info" href="{{ url_for('table', page_file=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <div class="container mb-5 mt-3">
+        <h4 class="text-center p-2 m-0 table-title mt-5" style="background-color:rgba(0,0,0,.05);">Frequently Asked
+            Questions</h4>
+        <table class="table table-hover shadow-sm">
+            <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Question</th>
+                <th scope="col">Frequency</th>
+                <th scope="col">Add Quiz</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in database_training_data.items %}
+            <tr>
+                <!--                <td>{{ row.id }}</td>-->
+                <td>{{ loop.index }}</td>
+                <td>{{ row.pattern }}</td>
+                <td class="text-center"><span class="badge badge-warning font-weight-bold">{{ row.frequency }}</span>
+                </td>
+<!--                 <td>-->
+                <!--                <a href="/delete_model_files/{{ row.id }}" class="btn btn-outline-danger px-3"-->
+                <!--                   onclick="return confirm('Are you sure to delete?')">Remove</a>-->
+                <!--            </td>-->
+                <td>
+                    <a href="/admin_chatbot/{{ row.id }}" class="btn btn-outline-primary px-3"
+                       onclick="return confirm('Are you sure to create quiz?')">Create</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="box-paginate text-right">
+            {% for page_num in database_training_data.iter_pages(left_edge=1, right_edge=1, left_current=1,
+            right_current=2) %}
+            {% if page_num %}
+            {% if database_training_data.page == page_num %}
+            <a class="btn btn-info" href="{{ url_for('table', page_training_data=page_num) }}">{{ page_num }}</a>
+            {% else %}
+            <a class="btn btn-outline-info" href="{{ url_for('table', page_training_data=page_num) }}">{{ page_num
+                }}</a>
+            {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <script>
+        function myFunction() {
+            // i++;
+            // var new_id_tag = 'input_tag' + i;
+
+            var ddl_tag = document.getElementById("ddl_tag").value;
+
+            // Setting input tag a new id
+            document.getElementById("input_tag").value = ddl_tag;
+
+
+            // var admin_response = document.getElementById("input_admin_response");
+            // admin_response.readOnly = true;
+
+            // alert("You selected: " + x + "Current input value: " + document.getElementById("input_tag").value)
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.ajax_lowercase').keyup(function () {
+                this.value = this.value.toLocaleLowerCase();
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+</body>
+</html>

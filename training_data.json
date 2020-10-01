@@ -1,0 +1,269 @@
+{
+    "intents": [
+        {
+            "tag": "definition",
+            "patterns": [
+                "What is meant by international business?",
+                "What do you mean by international business?",
+                "what is international business?",
+                "What do you mean by international business?",
+                "Can you explain what is international business?"
+            ],
+            "responses": [
+                "It refers to the trade of goods across national borders."
+            ]
+        },
+        {
+            "tag": "venture overseas reason",
+            "patterns": [
+                "why do companies need to venture overseas?",
+                "Why venture abroad?",
+                "Why do businesses venture abroad?",
+                "Why do companies venture abroad?"
+            ],
+            "responses": [
+                "to increase profits and expansion"
+            ]
+        },
+        {
+            "tag": "cons",
+            "patterns": [
+                "What are the cons of going internationally?"
+            ],
+            "responses": [
+                "Entering into new markets can be complex. When expanding into a new market, a business must adapt and operate accordingly to the country's regulations. These regulations may be very different from your home country."
+            ]
+        },
+        {
+            "tag": "pros",
+            "patterns": [
+                "What are pros of going internationally?",
+                "What is the benefit of going internationally?",
+                "What are the advantages of going internationally?",
+                "what is the benefits of going overseas?"
+            ],
+            "responses": [
+                "One of the biggest advantages of international expansion is new sales. Increased sales equals more revenue, which can often lead to further business expansions."
+            ]
+        },
+        {
+            "tag": "importance",
+            "patterns": [
+                "What is the importance of international business?",
+                "Importance of international business"
+            ],
+            "responses": [
+                "International business also increases competition in domestic markets and introduces new opportunities to foreign markets. Global competition encourages companies to become more innovative and efficient in their use of resources.\n\nFor consumers, international business introduces them to a variety of goods and services. For many, it enhances their standard of living and increases their exposure to new ideas, devices, products, services, and technologies."
+            ]
+        },
+        {
+            "tag": "define Internationalisation",
+            "patterns": [
+                "Define Internationalisation"
+            ],
+            "responses": [
+                "Internationalisation is the critical difference between flourishing or declining, surviving or perishing for companies in this increasingly globalised world."
+            ]
+        },
+        {
+            "tag": "define globalisation",
+            "patterns": [
+                "Define globalisation"
+            ],
+            "responses": [
+                "Free flow of factors of production, ideas, goods, services and capital that lead to more integrated economies and societies  "
+            ]
+        },
+        {
+            "tag": "growth of international business",
+            "patterns": [
+                "What is the growth of international business?"
+            ],
+            "responses": [
+                "The prevalence of international business has increased significantly during the last part of the twentieth century, thanks to the liberalization of trade and investment and the development of technology. Some of the significant elements that have advanced international business include:"
+            ]
+        },
+        {
+            "tag": "pestle acronym",
+            "patterns": [
+                "What does pestle stand for?",
+                "what is the acronym for pestle factor?",
+                "what is pestle?",
+                "what is pestle factor?"
+            ],
+            "responses": [
+                "It stands for : Political, Economical, Social, Technological, Environmental and Legal factors"
+            ]
+        },
+        {
+            "tag": "political factor ",
+            "patterns": [
+                "What is political factor?"
+            ],
+            "responses": [
+                "These determine the extent to which government and government policy may impact on an organisation or a specific industry. This would include political policy and stability as well as trade, fiscal and taxation policies too."
+            ]
+        },
+        {
+            "tag": "economic factor",
+            "patterns": [
+                "What is economic factor?"
+            ],
+            "responses": [
+                "These factors impact on the economy and its performance, which in turn directly impacts on the organisation and its profitability. Factors include interest rates, employment or unemployment rates, raw material costs and foreign exchange rates."
+            ]
+        },
+        {
+            "tag": "social factor",
+            "patterns": [
+                "What is social factor?",
+                "define social factor"
+            ],
+            "responses": [
+                "These factors focus on the social environment and identify emerging trends. This helps a marketer to further understand their customers\u00e2\u20ac\u2122 needs and wants. Factors include changing family demographics, education levels, cultural trends, attitude changes and changes in lifestyles."
+            ]
+        },
+        {
+            "tag": "technological factor",
+            "patterns": [
+                "What is technological factor?",
+                "define technological factor"
+            ],
+            "responses": [
+                "These factors consider the rate of technological innovation and development that could affect a market or industry. Factors could include changes in digital or mobile technology, automation, research and development. There is often a tendency to focus on developments only in digital technology, but consideration must also be given to new methods of distribution, manufacturing and also logistics."
+            ]
+        },
+        {
+            "tag": "legal factor",
+            "patterns": [
+                "What is legal factor?"
+            ],
+            "responses": [
+                "These factors relate to the influence of the surrounding environment and the impact of ecological aspects. With the rise in importance of CSR (Corporate Sustainability Responsibility), this element is becoming more important. Factors include climate, recycling procedures, carbon footprint, waste disposal and sustainability"
+            ]
+        },
+        {
+            "tag": "environmental factor",
+            "patterns": [
+                "What is environmental factor?"
+            ],
+            "responses": [
+                "An organisation must understand what is legal and allowed within the territories they operate in. They also must be aware of any change in legislation and the impact this may have on business operations. Factors include employment legislation, consumer law, healthy and safety, international as well as trade regulation and restrictions."
+            ]
+        },
+        {
+            "tag": " legal factor",
+            "patterns": [
+                "define legal factor"
+            ],
+            "responses": [
+                ""
+            ]
+        },
+        {
+            "tag": "forms of international business",
+            "patterns": [
+                "what are the five forms of international business?"
+            ],
+            "responses": [
+                "importing, exporting, licensing, franchising, joint-venture and foreign direct investment"
+            ]
+        },
+        {
+            "tag": "which country to select",
+            "patterns": [
+                "How to determine which country to choose?",
+                "How does businesses determine which country to choose?"
+            ],
+            "responses": [
+                "Determined through analysis conducted by the PESTEL model."
+            ]
+        },
+        {
+            "tag": "definition of political risk",
+            "patterns": [
+                "What is political risk?",
+                "Define political risk",
+                "What is meant by political risk?"
+            ],
+            "responses": [
+                "Possibility of unwanted consequences arising from political activity."
+            ]
+        },
+        {
+            "tag": "5 Point Framework for Political Risk Analysis",
+            "patterns": [
+                "What is the 5 Point Framework for Political Risk Analysis?",
+                "What is the five Point Framework for Political Risk Analysis?"
+            ],
+            "responses": [
+                "Stability of government in the host country, Social stability, Relationship between governments, Participation in International Organisations and Legal environment"
+            ]
+        },
+        {
+            "tag": "common modes of entry to foreign markets",
+            "patterns": [
+                "What are the common modes of entry to foreign markets?",
+                "What is the entry method to foreign markets?",
+                "What do businesses enter foreign markets?"
+            ],
+            "responses": [
+                "Strategic alliances, 100% DFI, Joint ventures, Licenses and Franchises."
+            ]
+        },
+        {
+            "tag": "definition of strategic alliances",
+            "patterns": [
+                "What is the definition of strategic alliances?"
+            ],
+            "responses": [
+                "It is the partnership (contractual agreement between 2 or more independent companies) for a specific purpose and limited period of time."
+            ]
+        },
+        {
+            "tag": "definition of foreign direct investment",
+            "patterns": [
+                "What is the definition of foreign direct investment?"
+            ],
+            "responses": [
+                "It is the venturing overseas while keeping fill control and ownership of the company."
+            ]
+        },
+        {
+            "tag": "definition of joint venture",
+            "patterns": [
+                "What is the definition of joint venture?"
+            ],
+            "responses": [
+                "It is the cooperative effort between two or more organisations that shares a common interest."
+            ]
+        },
+        {
+            "tag": "definition of licensing",
+            "patterns": [
+                "What is the definition of licensing?"
+            ],
+            "responses": [
+                "It is the contract through which, for a fee, a licensor (owner of the intellectual property) gives a licensee access and certain rights to use it"
+            ]
+        },
+        {
+            "tag": "definition of franchising",
+            "patterns": [
+                "What is the definition of franchising?"
+            ],
+            "responses": [
+                "It is in return for a fee, a franchiser (owner of the patented brand name & business processes) allows a franchisee to sell its products/servers following a proven set of business procedures"
+            ]
+        },
+        {
+            "tag": "capital recommendation",
+            "patterns": [
+                "how much capital is recommended?"
+            ],
+            "responses": [
+                "it really depends on the size of the business and country"
+            ]
+        }
+    ]
+}
